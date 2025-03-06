@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Policial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Policial en Tiempo Real</h1>
+        <nav>
+            <button id="show-detenciones">Detenciones</button>
+            <button id="show-siipol">Verificaciones SIIPOL</button>
+            <button id="show-accidentes">Accidentes de Tránsito</button>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Sección Detenciones -->
+        <section id="detenciones" class="tab-content active">
+            <h2>Registrar Detención</h2>
+            <form id="detencion-form">
+                <input type="number" name="dia" placeholder="Día" required>
+                <input type="time" name="hora" required>
+                <input type="number" name="mes" placeholder="Mes" required>
+                <input type="number" name="anio" placeholder="Año" required>
+                <input type="text" name="lugar_exacto" placeholder="Lugar Exacto" required>
+                <input type="text" name="municipio" placeholder="Municipio">
+                <input type="text" name="parroquia" placeholder="Parroquia">
+                <input type="text" name="cuadrante" placeholder="Cuadrante">
+                <input type="text" name="latitud" placeholder="Latitud">
+                <input type="text" name="longitud" placeholder="Longitud">
+                <input type="text" name="nombre" placeholder="Nombre" required>
+                <input type="text" name="apellido" placeholder="Apellido" required>
+                <input type="text" name="cedula" placeholder="Cédula" required>
+                <input type="text" name="lugar_residencia" placeholder="Lugar de Residencia">
+                <input type="text" name="delito" placeholder="Delito" required>
+                <textarea name="decomisos" placeholder="Decomisos (JSON: tipo, detalles)"></textarea>
+                <button type="submit">Guardar</button>
+            </form>
+            <div class="stats">
+                <div class="stat-box" id="detenciones-hoy">Detenciones Hoy: <span>0</span></div>
+            </div>
+        </section>
+
+        <!-- Sección Verificaciones SIIPOL -->
+        <section id="siipol" class="tab-content">
+            <h2>Registrar Verificación SIIPOL</h2>
+            <form id="siipol-form">
+                <select name="id_punto" required>
+                    <option value="">Seleccionar Punto de Control</option>
+                    <option value="1">CCP Antonio José de Sucre</option>
+                    <option value="2">EP Araya</option>
+                    <option value="3">CCP Gran Mariscal de Ayacucho</option>
+                    <option value="4">EP Raul Leonis</option>
+                    <option value="5">EP San Juan</option>
+                    <option value="6">CCP Domingo Montes</option>
+                    <option value="7">EP Bolivar</option>
+                    <option value="8">EP Mejia</option>
+                    <option value="9">CCP Andres Eloy Blanco</option>
+                    <option value="10">EP Ribero</option>
+                    <option value="11">CCP Jose Francisco Bermudez</option>
+                    <option value="12">EP Arismendi</option>
+                    <option value="13">EP Andres Mata</option>
+                    <option value="14">CCP Benitez</option>
+                    <option value="15">EP Libertador</option>
+                    <option value="16">CCP Manuel Valdez</option>
+                    <option value="17">EP Cajigal</option>
+                    <option value="18">EP Cajigal 2</option>
+                </select>
+                <select name="tipo" required>
+                    <option value="persona">Persona</option>
+                    <option value="vehiculo">Vehículo</option>
+                    <option value="moto">Moto</option>
+                    <option value="arma">Arma de Fuego</option>
+                </select>
+                <input type="text" name="cedula" placeholder="Cédula (Persona)">
+                <input type="text" name="nombre" placeholder="Nombre (Persona)">
+                <input type="text" name="placa" placeholder="Placa (Vehículo/Moto)">
+                <input type="text" name="serial" placeholder="Serial (Moto/Arma/Vehículo)">
+                <select name="resultado">
+                    <option value="solicitado">Solicitado</option>
+                    <option value="no solicitado">No Solicitado</option>
+                </select>
+                <input type="file" name="expediente" accept=".pdf,.jpg,.png">
+                <input type="number" name="dia" placeholder="Día" required>
+                <input type="time" name="hora" required>
+                <input type="number" name="mes" placeholder="Mes" required>
+                <input type="number" name="anio" placeholder="Año" required>
+                <button type="submit">Guardar</button>
+            </form>
+            <div class="stats">
+                <div class="stat-box" id="siipol-hoy">Verificaciones Hoy: <span>0</span></div>
+            </div>
+            <h3>Reportes SIIPOL</h3>
+            <button id="reporte-semanal">Semanal</button>
+            <button id="reporte-mensual">Mensual</button>
+            <canvas id="grafico-siipol" width="400" height="200"></canvas>
+        </section>
+
+        <!-- Sección Accidentes de Tránsito -->
+        <section id="accidentes" class="tab-content">
+            <h2>Registrar Accidente de Tránsito</h2>
+            <form id="accidente-form">
+                <input type="number" name="dia" placeholder="Día" required>
+                <input type="time" name="hora" required>
+                <input type="number" name="mes" placeholder="Mes" required>
+                <input type="number" name="anio" placeholder="Año" required>
+                <input type="text" name="lugar_exacto" placeholder="Lugar Exacto" required>
+                <input type="text" name="municipio" placeholder="Municipio">
+                <input type="text" name="parroquia" placeholder="Parroquia">
+                <input type="text" name="latitud" placeholder="Latitud">
+                <input type="text" name="longitud" placeholder="Longitud">
+                <select name="tipo_transporte" required>
+                    <option value="moto">Moto</option>
+                    <option value="vehiculo">Vehículo</option>
+                    <option value="otro">Otro</option>
+                </select>
+                <button type="submit">Guardar Accidente</button>
+            </form>
+            <h3>Agregar Involucrados</h3>
+            <form id="involucrado-form">
+                <input type="number" name="id_accidente" placeholder="ID del Accidente" required>
+                <input type="text" name="nombre" placeholder="Nombre" required>
+                <input type="text" name="apellido" placeholder="Apellido" required>
+                <input type="text" name="cedula" placeholder="Cédula" required>
+                <select name="genero" required>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <input type="number" name="edad" placeholder="Edad" required>
+                <select name="estado" required>
+                    <option value="herido">Herido</option>
+                    <option value="fallecido">Fallecido</option>
+                </select>
+                <textarea name="lesiones" placeholder="Lesiones (si aplica)"></textarea>
+                <button type="submit">Agregar Involucrado</button>
+            </form>
+            <div class="stats">
+                <div class="stat-box" id="accidentes-hoy">Accidentes Hoy: <span>0</span></div>
+                <div class="stat-box" id="heridos-hoy">Heridos Hoy: <span>0</span></div>
+                <div class="stat-box" id="fallecidos-hoy">Fallecidos Hoy: <span>0</span></div>
+            </div>
+            <h3>Reportes Accidentes</h3>
+            <button id="reporte-accidentes-semanal">Semanal</button>
+            <canvas id="grafico-accidentes" width="400" height="200"></canvas>
+        </section>
+    </main>
+
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
